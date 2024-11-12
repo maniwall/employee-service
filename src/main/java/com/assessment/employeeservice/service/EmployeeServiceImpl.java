@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.departmentRepository = departmentRepository;
     }
 
-    public static int getAge(LocalDate date) {
+    public static int calculateAge(LocalDate date) {
         LocalDate current = LocalDate.now();
         return current.getYear() - date.getYear();
     }
@@ -135,7 +135,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         dto.setDob(employee.getDob());
         dto.setMobile(employee.getMobile());
         dto.setGender(employee.getGender());
-        dto.setAge(getAge(employee.getDob()));
+        dto.setAge(calculateAge(employee.getDob()));
 
         Address address = new Address();
         com.assessment.employeeservice.entity.Address entityAddress = employee.getAddress();

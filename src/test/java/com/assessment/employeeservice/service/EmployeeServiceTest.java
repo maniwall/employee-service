@@ -32,7 +32,7 @@ public class EmployeeServiceTest {
     void setup() {
         Department department = new Department();
         Address address = new Address();
-        Optional<Employee> employee = Optional.of(new Employee(1, "fname", "lname", "testing@gmail.com", LocalDate.now(), "1122334455", Gender.MALE, address, department));
+        Optional<Employee> employee = Optional.of(new Employee(1, "fname", "lname", "testing@gmail.com", LocalDate.of(1990, 10, 10), "1122334455", Gender.MALE, address, department));
         Mockito.when(employeeRepository.findById(1)).thenReturn(employee);
     }
 
@@ -42,5 +42,12 @@ public class EmployeeServiceTest {
         String employeeFirstName = "fname";
         EmployeeRequest employee = employeeService.getEmployee(1);
         assertEquals(employeeFirstName, employee.getFirstname());
+    }
+
+    @SneakyThrows
+    @Test
+    public void testEmployeeAge() {
+        EmployeeRequest employee = employeeService.getEmployee(1);
+        assertEquals(34, EmployeeServiceImpl.calculateAge(employee.getDob()));
     }
 }

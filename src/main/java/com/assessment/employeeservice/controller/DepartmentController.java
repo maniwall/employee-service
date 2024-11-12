@@ -41,7 +41,7 @@ public class DepartmentController {
         boolean result = departmentService.deleteDepartment(departmentId);
 
         if (result)
-            return new ResponseEntity<>("Department Deleted Successfully !!", HttpStatus.CREATED);
+            return new ResponseEntity<>("Department Deleted Successfully !!", HttpStatus.OK);
         else
             return new ResponseEntity<>("Department Not Deleted !!", HttpStatus.BAD_REQUEST);
     }
@@ -50,7 +50,7 @@ public class DepartmentController {
     public ResponseEntity<String> updateDepartment(@RequestBody @Valid Department department) throws Exception {
         boolean result = departmentService.updateDepartment(department);
         if (result)
-            return new ResponseEntity<>("Department Updated Successfully !!", HttpStatus.CREATED);
+            return new ResponseEntity<>("Department Updated Successfully !!", HttpStatus.OK);
         else
             return new ResponseEntity<>("Department Not updated!!", HttpStatus.BAD_REQUEST);
     }

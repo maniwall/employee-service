@@ -47,7 +47,7 @@ public class EmployeeController {
         boolean result = employeeService.deleteEmployee(employeeId);
 
         if(result)
-            return new ResponseEntity<>("Employee Deleted Successfully !!", HttpStatus.CREATED);
+            return new ResponseEntity<>("Employee Deleted Successfully!!", HttpStatus.OK);
         else
             return new ResponseEntity<>("Employee Not Deleted !!", HttpStatus.BAD_REQUEST);
     }
@@ -56,7 +56,7 @@ public class EmployeeController {
     public ResponseEntity<String> updateEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) throws Exception{
         boolean result = employeeService.updateEmployee(employeeRequest);
         if(result)
-            return new ResponseEntity<>("Employee Updated Successfully !!", HttpStatus.CREATED);
+            return new ResponseEntity<>("Employee Updated Successfully !!", HttpStatus.OK);
         else
             return new ResponseEntity<>("Employee Not Updated!!", HttpStatus.BAD_REQUEST);
     }
