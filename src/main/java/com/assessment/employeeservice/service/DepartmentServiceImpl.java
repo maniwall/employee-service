@@ -28,7 +28,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public boolean createDepartment(Department department) {
-        com.assessment.employeeservice.entity.Department departmentEntity = convertDepartmentDtoToEntity(department);
+        com.assessment.employeeservice.entity.Department departmentEntity = convertDepartmentDtoToEntity(department, new com.assessment.employeeservice.entity.Department());
         departmentEntity = departmentRepository.save(departmentEntity);
         return departmentEntity.getId() > 0;
     }
@@ -44,8 +44,25 @@ public class DepartmentServiceImpl implements DepartmentService {
         return true;
     }
 
-    private static com.assessment.employeeservice.entity.Department convertDepartmentDtoToEntity(Department department) {
-        return new com.assessment.employeeservice.entity.Department(department.getName(), department.getSector());
+    @Override
+    public boolean updateDepartment(Department department) throws Exception{
+
+        if(null == department.getId())
+            throw new DepartmentServiceException("Enter valid Department ID");
+
+        Optional<com.assessment.employeeservice.entity.Department> departmentEntityOpt = departmentRepository.findById(department.getId());
+        com.assessment.employeeservice.entity.Department departmentEntity;
+
+        if(departmentEntityOpt.isPresent()) {
+            departmentEntity= convertDepartmentDtoToEntity(department, departmentEntityOpt.get());
+            departmentRepository.save(departmentEntity);
+            return true;
+        } else
+            throw new DepartmentServiceException("Department Entity not found to update, Invalid Data");
+    }
+
+    private static com.assessment.employeeservice.entity.Department convertDepartmentDtoToEntity(Department department, com.assessment.employeeservice.entity.Department departmentEntity1) {
+        return new com.assessment.employeeservice.entity.Department(department.getId(), department.getName(), department.getSector());
     }
 
     private static Department convertDepartmentEntityToDto(com.assessment.employeeservice.entity.Department entity) {

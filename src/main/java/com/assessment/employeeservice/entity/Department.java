@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Department {
 
     @Id
@@ -28,6 +28,12 @@ public class Department {
 
     public Department(String name, String sector) {
 //        this.id = id;
+        this.name = name;
+        this.sector = sector;
+    }
+
+    public Department(Integer id, String name, String sector) {
+        this.id = id;
         this.name = name;
         this.sector = sector;
     }

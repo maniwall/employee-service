@@ -46,4 +46,14 @@ public class DepartmentController {
             return new ResponseEntity<>("Department Not Deleted !!", HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping
+    public ResponseEntity<String> updateDepartment(@RequestBody @Valid Department department) throws Exception {
+        boolean result = departmentService.updateDepartment(department);
+        if (result)
+            return new ResponseEntity<>("Department Updated Successfully !!", HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>("Department Not updated!!", HttpStatus.BAD_REQUEST);
+    }
+
+
 }

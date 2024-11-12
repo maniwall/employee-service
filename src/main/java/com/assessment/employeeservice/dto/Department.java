@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Department {
 
 //    @JsonIgnore()
+    // @NotNull(message = "Enter valid Department id")
     private Integer id;
 
     @NotNull(message = "Department Name is missing")

@@ -55,10 +55,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeRequest getEmployee(Integer empId) throws Exception {
         Optional<Employee> employeeOpt = employeeRepository.findById(empId);
-//        if(employeeOpt.isPresent())
-//            return convertEmployeeEntityToDto(employeeOpt.get());
-//        else
-//            throw new EmployeeServiceException("No record or entity found to fetch");
         return employeeOpt.map(EmployeeServiceImpl::convertEmployeeEntityToDto).orElseThrow(() -> new EmployeeServiceException("No record or entity found to fetch"));
     }
 

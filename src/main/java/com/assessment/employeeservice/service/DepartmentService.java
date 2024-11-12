@@ -10,4 +10,6 @@ public interface DepartmentService {
     boolean createDepartment(Department department);
 
     boolean deleteDepartment(Integer departmentId) throws Exception;
+
+    boolean updateDepartment(Department department) throws Exception;
 }
