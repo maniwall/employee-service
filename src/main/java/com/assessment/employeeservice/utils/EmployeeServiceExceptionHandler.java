@@ -30,5 +30,10 @@ public class EmployeeServiceExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(DepartmentServiceException.class)
+    public ResponseEntity<String> handleDepartmentServicesException(DepartmentServiceException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 
 }
