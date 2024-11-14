@@ -1,6 +1,5 @@
 package com.assessment.employeeservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,6 @@ public class Department {
     private List<Employee> employees;
 
     public Department(String name, String sector) {
-//        this.id = id;
         this.name = name;
         this.sector = sector;
     }

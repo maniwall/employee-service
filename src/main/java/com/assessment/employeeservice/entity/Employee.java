@@ -2,15 +2,12 @@ package com.assessment.employeeservice.entity;
 
 import com.assessment.employeeservice.utils.Gender;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
@@ -36,7 +33,6 @@ public class Employee {
     private Address address;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "department_id", updatable = true, nullable = true)
     @JoinColumn(name = "department_id")
     @JsonBackReference
     private Department department;

@@ -2,15 +2,12 @@ package com.assessment.employeeservice.dto;
 
 import com.assessment.employeeservice.utils.Gender;
 import com.assessment.employeeservice.utils.ValidateGender;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -19,8 +16,10 @@ public class EmployeeRequest {
     private Integer id;
 
     @NotNull(message = "Name cannot be null")
+    @Size(min = 3, max = 32, message = "FirstName must be between 3 and 32 characters")
     private String firstname;
 
+    @Size(min = 3, max = 32, message = "LastName must be between 3 and 32 characters")
     private String lastname;
 
     @Email(message = "Email should be valid")
@@ -32,6 +31,7 @@ public class EmployeeRequest {
     @Pattern(regexp = "^\\d{10}$", message = "Mobile number should be valid")
     private String mobile;
 
+    @NotNull(message = "Invalid gender")
     @ValidateGender(regexp = "MALE|FEMALE")
     private Gender gender;
 
