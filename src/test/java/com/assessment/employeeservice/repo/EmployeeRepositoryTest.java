@@ -35,7 +35,7 @@ public class EmployeeRepositoryTest {
                 , LocalDate.of(2020, 10, 10)
                 , "1122334455", Gender.MALE
                 , new Address("street","city","1234")
-                , new Department("cs","it"));
+                , new Department("ECE","it"));
 
         Employee persistEmployee = entityManager.persist(emp);
         persistEmployeeId = persistEmployee.getId();

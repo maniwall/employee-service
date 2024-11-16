@@ -43,12 +43,12 @@ public class EmployeeControllerTest {
                 "dob" :"2020-11-15",
                 "mobile": "6789965777",
                 "gender": "MALE1",
-                "addressDTO": {
+                "address": {
                     "house_number": "306",
                     "street": "BTM1",
                     "zipcode": "3456"
                 },
-                "departmentDTO": {
+                "department": {
                     "name": "SE2",
                     "sector": "IT2"
                 }
@@ -82,12 +82,12 @@ public class EmployeeControllerTest {
                         "    \"dob\" :\"2020-11-15\",\n" +
                         "    \"mobile\": \"6789965777\",\n" +
                         "    \"gender\": \"MALE\",\n" +
-                        "    \"addressDTO\": {\n" +
+                        "    \"address\": {\n" +
                         "        \"house_number\": \"306\",\n" +
                         "        \"street\": \"BTM1\",\n" +
                         "        \"zipcode\": \"3456\"\n" +
                         "    },\n" +
-                        "    \"departmentDTO\": {\n" +
+                        "    \"department\": {\n" +
                         "        \"name\": \"SE2\",\n" +
                         "        \"sector\": \"IT2\"\n" +
                         "    }\n" +
@@ -106,17 +106,17 @@ public class EmployeeControllerTest {
                                 "    \"dob\" :\"2020-11-15\",\n" +
                                 "    \"mobile\": \"6789965777\",\n" +
                                 "    \"gender\": \"MALE\",\n" +
-                                "    \"addressDTO\": {\n" +
+                                "    \"address\": {\n" +
                                 "        \"house_number\": \"306\",\n" +
                                 "        \"street\": \"BTM1\",\n" +
                                 "        \"zipcode\": \"3456\"\n" +
                                 "    },\n" +
-                                "    \"departmentDTO\": {\n" +
+                                "    \"department\": {\n" +
                                 "        \"name\": \"SE2\",\n" +
                                 "        \"sector\": \"IT2\"\n" +
                                 "    }\n" +
                                 "}")).andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().string("Employee Not Updated!!"));
+                .andExpect(MockMvcResultMatchers.content().string("{\"firstname\":\"FirstName must be between 3 and 32 characters\"}"));
     }
 
     @Test
