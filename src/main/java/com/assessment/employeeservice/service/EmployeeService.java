@@ -1,18 +1,18 @@
 package com.assessment.employeeservice.service;
 
-import com.assessment.employeeservice.dto.EmployeeRequest;
+import com.assessment.employeeservice.dto.EmployeeDTO;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    List<EmployeeRequest> getEmployees();
+    List<EmployeeDTO> getEmployees();
 
-    boolean createEmployee(EmployeeRequest employeeRequest);
+    boolean createEmployee(EmployeeDTO employeeDTO);
 
-    EmployeeRequest getEmployee(Integer empId) throws Exception;
+    EmployeeDTO getEmployee(Integer empId) throws Exception;
 
     boolean deleteEmployee(Integer employeeId) throws Exception;
 
-    boolean updateEmployee(EmployeeRequest employeeRequest) throws Exception;
+    boolean updateEmployee(EmployeeDTO employeeDTO) throws Exception;
 }

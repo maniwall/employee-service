@@ -1,6 +1,6 @@
 package com.assessment.employeeservice.controller;
 
-import com.assessment.employeeservice.dto.EmployeeRequest;
+import com.assessment.employeeservice.dto.EmployeeDTO;
 import com.assessment.employeeservice.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeRequest>> getEmployees() {
-        List<EmployeeRequest> employees = employeeService.getEmployees();
+    public ResponseEntity<List<EmployeeDTO>> getEmployees() {
+        List<EmployeeDTO> employees = employeeService.getEmployees();
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> createEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) {
-        boolean result = employeeService.createEmployee(employeeRequest);
+    public ResponseEntity<String> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
+        boolean result = employeeService.createEmployee(employeeDTO);
         if(result)
             return new ResponseEntity<>("Employee Created Successfully !!", HttpStatus.CREATED);
         else
@@ -37,8 +37,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public ResponseEntity<EmployeeRequest> getEmployee(@PathVariable Integer employeeId) throws Exception {
-        EmployeeRequest emp = employeeService.getEmployee(employeeId);
+    public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Integer employeeId) throws Exception {
+        EmployeeDTO emp = employeeService.getEmployee(employeeId);
         return new ResponseEntity<>(emp, HttpStatus.OK);
     }
 
@@ -53,8 +53,8 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updateEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) throws Exception{
-        boolean result = employeeService.updateEmployee(employeeRequest);
+    public ResponseEntity<String> updateEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws Exception{
+        boolean result = employeeService.updateEmployee(employeeDTO);
         if(result)
             return new ResponseEntity<>("Employee Updated Successfully !!", HttpStatus.OK);
         else

@@ -1,8 +1,8 @@
 package com.assessment.employeeservice.service;
 
-import com.assessment.employeeservice.dto.Address;
-import com.assessment.employeeservice.dto.Department;
-import com.assessment.employeeservice.dto.EmployeeRequest;
+import com.assessment.employeeservice.dto.AddressDTO;
+import com.assessment.employeeservice.dto.DepartmentDTO;
+import com.assessment.employeeservice.dto.EmployeeDTO;
 import com.assessment.employeeservice.entity.Employee;
 import com.assessment.employeeservice.repository.DepartmentRepository;
 import com.assessment.employeeservice.repository.EmployeeRepository;
@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeRequest> getEmployees() {
+    public List<EmployeeDTO> getEmployees() {
         List<Employee> employees = employeeRepository.findAll();
         return employees.stream()
                 .map(EmployeeServiceImpl::convertEmployeeEntityToDto)
@@ -45,15 +45,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public boolean createEmployee(EmployeeRequest employeeRequest) {
+    public boolean createEmployee(EmployeeDTO employeeDTO) {
         Employee employeeEntity = new Employee();
-        Employee emp = convertEmployeeDtoToEntity(employeeEntity, employeeRequest);
+        Employee emp = convertEmployeeDtoToEntity(employeeEntity, employeeDTO);
         emp = employeeRepository.save(emp);
         return emp.getId() > 0;
     }
 
     @Override
-    public EmployeeRequest getEmployee(Integer empId) throws Exception {
+    public EmployeeDTO getEmployee(Integer empId) throws Exception {
         Optional<Employee> employeeOpt = employeeRepository.findById(empId);
         return employeeOpt.map(EmployeeServiceImpl::convertEmployeeEntityToDto).orElseThrow(() -> new EmployeeServiceException("No record or entity found to fetch"));
     }
@@ -74,8 +74,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean updateEmployee(EmployeeRequest employeeRequest) throws Exception {
-        Integer employeeId = employeeRequest.getId();
+    public boolean updateEmployee(EmployeeDTO employeeDTO) throws Exception {
+        Integer employeeId = employeeDTO.getId();
 
         if (employeeId == null || employeeId < 0) {
             throw new EmployeeServiceException("Invalid Employee ID, not able to update" + employeeId);
@@ -84,39 +84,39 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employeeEntity = employeeRepository.findById(employeeId);
         employeeEntity.orElseThrow(() -> new EmployeeServiceException("No record or entity to update"));
 
-        Employee employee = convertEmployeeDtoToEntity(employeeEntity.get(), employeeRequest);
+        Employee employee = convertEmployeeDtoToEntity(employeeEntity.get(), employeeDTO);
         employee = employeeRepository.save(employee);
 
         return employee.getId() > 0;
     }
 
-    private Employee convertEmployeeDtoToEntity(Employee employeeEntity, EmployeeRequest employeeRequest) {
+    private Employee convertEmployeeDtoToEntity(Employee employeeEntity, EmployeeDTO employeeDTO) {
 
         // Employee employeeEntity = new Employee();
-        employeeEntity.setId(employeeRequest.getId());
-        employeeEntity.setFirstname(employeeRequest.getFirstname());
-        employeeEntity.setLastname(employeeRequest.getLastname());
-        employeeEntity.setEmail(employeeRequest.getEmail());
-        employeeEntity.setDob(employeeRequest.getDob());
-        employeeEntity.setMobile(employeeRequest.getMobile());
-        employeeEntity.setGender(employeeRequest.getGender());
+        employeeEntity.setId(employeeDTO.getId());
+        employeeEntity.setFirstname(employeeDTO.getFirstname());
+        employeeEntity.setLastname(employeeDTO.getLastname());
+        employeeEntity.setEmail(employeeDTO.getEmail());
+        employeeEntity.setDob(employeeDTO.getDob());
+        employeeEntity.setMobile(employeeDTO.getMobile());
+        employeeEntity.setGender(employeeDTO.getGender());
 
-        Address addressDto = employeeRequest.getAddress();
+        AddressDTO addressDto = employeeDTO.getAddress();
         com.assessment.employeeservice.entity.Address addressEntity = new com.assessment.employeeservice.entity.Address();
         addressEntity.setHouse_number(addressDto.getHouse_number());
         addressEntity.setStreet(addressDto.getStreet());
         addressEntity.setZipcode(addressDto.getZipcode());
 
-        Optional<com.assessment.employeeservice.entity.Department> departmentOpt = departmentRepository.findByName(employeeRequest.getDepartment().getName());
+        Optional<com.assessment.employeeservice.entity.Department> departmentOpt = departmentRepository.findByName(employeeDTO.getDepartment().getName());
         com.assessment.employeeservice.entity.Department departmentEntity;
 
         if (departmentOpt.isPresent()) {
             departmentEntity = departmentOpt.get();
         } else {
-            Department department = employeeRequest.getDepartment();
+            DepartmentDTO departmentDTO = employeeDTO.getDepartment();
             departmentEntity = new com.assessment.employeeservice.entity.Department();
-            departmentEntity.setName(department.getName());
-            departmentEntity.setSector(department.getSector());
+            departmentEntity.setName(departmentDTO.getName());
+            departmentEntity.setSector(departmentDTO.getSector());
         }
 
         employeeEntity.setAddress(addressEntity);
@@ -125,8 +125,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeEntity;
     }
 
-    private static EmployeeRequest convertEmployeeEntityToDto(Employee employee) {
-        EmployeeRequest dto = new EmployeeRequest();
+    private static EmployeeDTO convertEmployeeEntityToDto(Employee employee) {
+        EmployeeDTO dto = new EmployeeDTO();
 
         dto.setId(employee.getId());
         dto.setFirstname(employee.getFirstname());
@@ -137,19 +137,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         dto.setGender(employee.getGender());
         dto.setAge(calculateAge(employee.getDob()));
 
-        Address address = new Address();
+        AddressDTO addressDTO = new AddressDTO();
         com.assessment.employeeservice.entity.Address entityAddress = employee.getAddress();
-        address.setHouse_number(entityAddress.getHouse_number());
-        address.setStreet(entityAddress.getStreet());
-        address.setZipcode(entityAddress.getZipcode());
-        dto.setAddress(address);
+        addressDTO.setHouse_number(entityAddress.getHouse_number());
+        addressDTO.setStreet(entityAddress.getStreet());
+        addressDTO.setZipcode(entityAddress.getZipcode());
+        dto.setAddress(addressDTO);
 
-        Department department = new Department();
+        DepartmentDTO departmentDTO = new DepartmentDTO();
         com.assessment.employeeservice.entity.Department entityDepartment = employee.getDepartment();
-        department.setId(entityDepartment.getId());
-        department.setName(entityDepartment.getName());
-        department.setSector(entityDepartment.getSector());
-        dto.setDepartment(department);
+        departmentDTO.setId(entityDepartment.getId());
+        departmentDTO.setName(entityDepartment.getName());
+        departmentDTO.setSector(entityDepartment.getSector());
+        dto.setDepartment(departmentDTO);
 
         return dto;
     }

@@ -1,6 +1,6 @@
 package com.assessment.employeeservice.service;
 
-import com.assessment.employeeservice.dto.EmployeeRequest;
+import com.assessment.employeeservice.dto.EmployeeDTO;
 import com.assessment.employeeservice.entity.Address;
 import com.assessment.employeeservice.entity.Department;
 import com.assessment.employeeservice.entity.Employee;
@@ -40,14 +40,14 @@ public class EmployeeServiceTest {
     @Test
     public void testGetEmployeeById() {
         String employeeFirstName = "fname";
-        EmployeeRequest employee = employeeService.getEmployee(1);
+        EmployeeDTO employee = employeeService.getEmployee(1);
         assertEquals(employeeFirstName, employee.getFirstname());
     }
 
     @SneakyThrows
     @Test
     public void testEmployeeAge() {
-        EmployeeRequest employee = employeeService.getEmployee(1);
+        EmployeeDTO employee = employeeService.getEmployee(1);
         assertEquals(34, EmployeeServiceImpl.calculateAge(employee.getDob()));
     }
 }

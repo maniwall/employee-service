@@ -1,15 +1,15 @@
 package com.assessment.employeeservice.service;
 
-import com.assessment.employeeservice.dto.Department;
+import com.assessment.employeeservice.dto.DepartmentDTO;
 
 import java.util.List;
 
 public interface DepartmentService {
-    List<Department> getDepartments();
+    List<DepartmentDTO> getDepartments();
 
-    boolean createDepartment(Department department);
+    boolean createDepartment(DepartmentDTO departmentDTO) throws Exception;
 
     boolean deleteDepartment(Integer departmentId) throws Exception;
 
-    boolean updateDepartment(Department department) throws Exception;
+    boolean updateDepartment(DepartmentDTO departmentDTO) throws Exception;
 }

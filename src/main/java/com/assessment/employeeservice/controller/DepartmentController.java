@@ -1,6 +1,6 @@
 package com.assessment.employeeservice.controller;
 
-import com.assessment.employeeservice.dto.Department;
+import com.assessment.employeeservice.dto.DepartmentDTO;
 import com.assessment.employeeservice.service.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,18 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Department>> getDepartments() {
-        List<Department> departments = departmentService.getDepartments();
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+    public ResponseEntity<List<DepartmentDTO>> getDepartments() {
+        List<DepartmentDTO> departmentDTOS = departmentService.getDepartments();
+        return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> createDepartment(@RequestBody @Valid Department department) {
-        boolean result = departmentService.createDepartment(department);
+    public ResponseEntity<String> createDepartment(@RequestBody @Valid DepartmentDTO departmentDTO) throws Exception{
+        boolean result = departmentService.createDepartment(departmentDTO);
         if (result)
-            return new ResponseEntity<>("Department Created Successfully !!", HttpStatus.CREATED);
+            return new ResponseEntity<>("DepartmentDTO Created Successfully !!", HttpStatus.CREATED);
         else
-            return new ResponseEntity<>("Department Not Created!!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("DepartmentDTO Not Created!!", HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{departmentId}")
@@ -41,18 +41,18 @@ public class DepartmentController {
         boolean result = departmentService.deleteDepartment(departmentId);
 
         if (result)
-            return new ResponseEntity<>("Department Deleted Successfully !!", HttpStatus.OK);
+            return new ResponseEntity<>("DepartmentDTO Deleted Successfully !!", HttpStatus.OK);
         else
-            return new ResponseEntity<>("Department Not Deleted !!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("DepartmentDTO Not Deleted !!", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping
-    public ResponseEntity<String> updateDepartment(@RequestBody @Valid Department department) throws Exception {
-        boolean result = departmentService.updateDepartment(department);
+    public ResponseEntity<String> updateDepartment(@RequestBody @Valid DepartmentDTO departmentDTO) throws Exception {
+        boolean result = departmentService.updateDepartment(departmentDTO);
         if (result)
-            return new ResponseEntity<>("Department Updated Successfully !!", HttpStatus.OK);
+            return new ResponseEntity<>("DepartmentDTO Updated Successfully !!", HttpStatus.OK);
         else
-            return new ResponseEntity<>("Department Not updated!!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("DepartmentDTO Not updated!!", HttpStatus.BAD_REQUEST);
     }
 
 

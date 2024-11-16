@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeRequest {
+public class EmployeeDTO {
     private Integer id;
 
     @NotNull(message = "Name cannot be null")
@@ -37,13 +37,13 @@ public class EmployeeRequest {
 
     private int age;
 
-    @NotNull(message = "Address is missing")
-    private Address address;
+    @NotNull(message = "AddressDTO is missing")
+    private AddressDTO address;
 
-    @NotNull(message = "Department is missing")
-    private Department department;
+    @NotNull(message = "DepartmentDTO is missing")
+    private DepartmentDTO department;
 
-    public EmployeeRequest(String firstname, String lastname, String email, LocalDate dob, String mobile, Gender gender, Address address, Department department) {
+    public EmployeeDTO(String firstname, String lastname, String email, LocalDate dob, String mobile, Gender gender, AddressDTO address, DepartmentDTO department) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
