@@ -2,6 +2,7 @@ package com.assessment.employeeservice.entity;
 
 import com.assessment.employeeservice.utils.Gender;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Employee {
     private Gender gender;
     // private int age;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -46,5 +47,14 @@ public class Employee {
         this.gender = gender;
         this.address = address;
         this.department = department;
+    }
+
+    public Employee(String firstname, String lastname, String email, LocalDate dob, String mobile, Gender gender) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.dob = dob;
+        this.mobile = mobile;
+        this.gender = gender;
     }
 }

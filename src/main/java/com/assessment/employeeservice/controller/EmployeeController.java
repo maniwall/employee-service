@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/employee")
+@CrossOrigin(origins = "*")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -56,6 +57,7 @@ public class EmployeeController {
     public ResponseEntity<String> updateEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws Exception{
         boolean result = employeeService.updateEmployee(employeeDTO);
         if(result)
+//            return new ResponseEntity<>("Employee Not Updated!!", HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>("Employee Updated Successfully !!", HttpStatus.OK);
         else
             return new ResponseEntity<>("Employee Not Updated!!", HttpStatus.BAD_REQUEST);

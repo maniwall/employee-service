@@ -59,13 +59,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public boolean deleteEmployee(Integer employeeId) throws Exception {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
 
         if(employee.isPresent()){
             Integer employeeIdValue = employee.get().getId();
             employeeRepository.updateEmployeeDepartmentId(employeeIdValue);
-            employeeRepository.deleteByEmployeeId(employeeIdValue);
+            employeeRepository.deleteById(employeeIdValue);
+            // employeeRepository.deleteByEmployeeId(employeeIdValue);
         }
         else
             throw new EmployeeServiceException("Invalid Employee ID, not able to delete");
@@ -74,6 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public boolean updateEmployee(EmployeeDTO employeeDTO) throws Exception {
         Integer employeeId = employeeDTO.getId();
 
@@ -103,9 +106,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         AddressDTO addressDto = employeeDTO.getAddress();
         com.assessment.employeeservice.entity.Address addressEntity = new com.assessment.employeeservice.entity.Address();
-        addressEntity.setHouse_number(addressDto.getHouse_number());
-        addressEntity.setStreet(addressDto.getStreet());
-        addressEntity.setZipcode(addressDto.getZipcode());
+        if(null != addressDto) {
+            addressEntity.setHouse_number(addressDto.getHouse_number());
+            addressEntity.setStreet(addressDto.getStreet());
+            addressEntity.setZipcode(addressDto.getZipcode());
+        }
 
         Optional<com.assessment.employeeservice.entity.Department> departmentOpt = departmentRepository.findByName(employeeDTO.getDepartment().getName());
         com.assessment.employeeservice.entity.Department departmentEntity;
@@ -139,10 +144,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         AddressDTO addressDTO = new AddressDTO();
         com.assessment.employeeservice.entity.Address entityAddress = employee.getAddress();
-        addressDTO.setHouse_number(entityAddress.getHouse_number());
-        addressDTO.setStreet(entityAddress.getStreet());
-        addressDTO.setZipcode(entityAddress.getZipcode());
-        dto.setAddress(addressDTO);
+        if(null != entityAddress) {
+            addressDTO.setHouse_number(entityAddress.getHouse_number());
+            addressDTO.setStreet(entityAddress.getStreet());
+            addressDTO.setZipcode(entityAddress.getZipcode());
+            dto.setAddress(addressDTO);
+        }
 
         DepartmentDTO departmentDTO = new DepartmentDTO();
         com.assessment.employeeservice.entity.Department entityDepartment = employee.getDepartment();

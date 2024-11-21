@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -42,7 +43,7 @@ public class EmployeeControllerTest {
                 "email": "test_email",
                 "dob" :"2020-11-15",
                 "mobile": "6789965777",
-                "gender": "MALE1",
+                "gender": "MALE",
                 "address": {
                     "house_number": "306",
                     "street": "BTM1",
@@ -64,10 +65,12 @@ public class EmployeeControllerTest {
 
     @Test
     public void testInvalidEmailRequest() throws Exception {
-        mockMvc.perform(post("/employee")
+//        MvcResult result =
+                mockMvc.perform(post("/employee")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(invalidEmailEmployeeRequest))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .content(invalidEmailEmployeeRequest)) //.andReturn();
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email should be valid"));
     }
 
     @Test
@@ -91,7 +94,8 @@ public class EmployeeControllerTest {
                         "        \"name\": \"SE2\",\n" +
                         "        \"sector\": \"IT2\"\n" +
                         "    }\n" +
-                        "}")).andExpect(MockMvcResultMatchers.status().isCreated());
+                        "}")).andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().string("Employee Created Successfully !!"));
     }
 
     @Test
@@ -134,7 +138,6 @@ public class EmployeeControllerTest {
         Mockito.when(employeeService.getEmployees()).thenReturn(Arrays.asList(employeeDTO));
         mockMvc.perform(MockMvcRequestBuilders.get("/employee"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-//                .andExpect(MockMvcResultMatchers.content().json();
     }
 
 

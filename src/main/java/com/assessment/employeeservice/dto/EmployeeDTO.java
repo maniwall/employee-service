@@ -37,7 +37,7 @@ public class EmployeeDTO {
 
     private int age;
 
-    @NotNull(message = "AddressDTO is missing")
+    // @NotNull(message = "AddressDTO is missing")
     private AddressDTO address;
 
     @NotNull(message = "DepartmentDTO is missing")
